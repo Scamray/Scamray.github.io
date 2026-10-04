@@ -2,6 +2,7 @@
 
 Page bodies live in src/*.html; scam cards come from scams.json at view time.
 """
+import hashlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -19,6 +20,11 @@ PAGES = {
 }
 
 
+def ver(path):
+    """Content hash for cache busting, so visitors get new CSS/JS as soon as a deploy lands."""
+    return hashlib.sha1((ROOT / path).read_bytes()).hexdigest()[:8]
+
+
 def shell(name, body):
     title, desc = PAGES[name]
     menu = "".join(f'<a href="{u}">{ICONS[i]}{n}</a>' for n, u, i in LINKS)
@@ -27,7 +33,7 @@ def shell(name, body):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}">
-<link rel="icon" href="assets/favicon.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="stylesheet" href="style.css"><script src="assets/site.js" defer></script></head>
+<link rel="icon" href="assets/favicon.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="stylesheet" href="style.css?v={ver('style.css')}"><script src="assets/site.js?v={ver('assets/site.js')}" defer></script></head>
 <body>
 <div class="wrap"><nav class="nav"><a class="logo" href="index.html">SCAM RAY</a>
 <div class="links"><a href="scams.html"{cur("scams")}>Scams</a><a href="about.html"{cur("about")}>About</a>

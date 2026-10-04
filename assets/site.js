@@ -12,4 +12,4 @@ function card(s) {
 // newest first: by posted date when posted, otherwise by planned order
 const newest = (a, b) => (b.posted || "").localeCompare(a.posted || "") || b.order - a.order;
 // only videos that are actually posted show on the site
-async function loadScams() { return (await (await fetch("scams.json")).json()).filter(s => s.posted); }
+async function loadScams() { return (await (await fetch("scams.json", { cache: "no-cache" })).json()).filter(s => s.posted); }
