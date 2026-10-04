@@ -19,5 +19,6 @@
 </section></main>
 <script>addEventListener("DOMContentLoaded", async () => {
   const all = await loadScams();
-  document.getElementById("latest").innerHTML = all.sort(newest).slice(0, 3).map(card).join("");
+  document.getElementById("latest").innerHTML = all.sort(newest).slice(0, 3).map(card).join("")
+    || '<p class="lead">Our first breakdowns are on their way. <a href="https://www.youtube.com/@scamray">Subscribe on YouTube</a> to catch them.</p>';
 });</script>

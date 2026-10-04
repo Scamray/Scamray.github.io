@@ -81,5 +81,5 @@ footer{flex-direction:column;gap:14px}
 .flinks{display:flex;flex-wrap:wrap;gap:20px}
 @media(max-width:480px){.nav .links{gap:14px;font-size:14px}details.watch summary{padding:7px 12px}}
 .vcard .thumb{aspect-ratio:4/5}
-#latest{grid-template-columns:repeat(3,1fr)}
+#latest{grid-template-columns:repeat(3,1fr)}#latest>p{grid-column:1/-1}
 @media(max-width:800px){#latest{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;margin:0 -24px;padding:0 24px 8px}#latest .vcard{flex:0 0 68%;scroll-snap-align:start}}

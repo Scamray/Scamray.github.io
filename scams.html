@@ -33,7 +33,7 @@
     list.sort(mode === "az" ? (a, b) => a.title.replace(/\W/g, "").localeCompare(b.title.replace(/\W/g, ""))
               : mode === "old" ? (a, b) => newest(b, a) : newest);
     document.getElementById("count").textContent = list.length + (list.length === 1 ? " scam" : " scams");
-    document.getElementById("list").innerHTML = list.map(card).join("") || '<p class="lead">No scams match those filters yet.</p>';
+    document.getElementById("list").innerHTML = list.map(card).join("") || (all.length ? '<p class="lead">No scams match those filters yet.</p>' : '<p class="lead">Our first breakdowns are on their way. Check back soon.</p>');
   }
   draw();
 });</script>
