@@ -1,0 +1,23 @@
+<div class="wrap"><header class="hero">
+<div><h1>Spot the scam before it spots you.</h1>
+<p class="sub">Every Short takes one real scam apart in under a minute, so you and the people you love know exactly what to ignore.</p>
+<div class="btns"><a class="pill dark" href="https://www.youtube.com/@scamray">Watch on YouTube</a><a class="pill line" href="scams.html">Browse scams</a></div></div>
+<div class="phone" role="img" aria-label="A Scam Ray Short breaking down a fake toll text">
+<div class="flag">THIS TEXT IS A SCAM</div>
+<div class="bubble">STATE TOLL SERVICES: You have an unpaid toll balance of $4.15. Pay within 24 hrs…</div>
+<div class="cap">forward it to <i>7726</i></div></div>
+</header></div>
+<div class="band"><div class="wrap steps">
+<div><h3><span class="dot" style="background:var(--cyan)"></span>See it</h3><p>The exact text, call or website, recreated so you'll recognize it.</p></div>
+<div><h3><span class="dot" style="background:var(--red)"></span>Spot it</h3><p>The one red flag that gives it away, and what the scammer is really after.</p></div>
+<div><h3><span class="dot" style="background:var(--green)"></span>Stop it</h3><p>What to do instead, and how to report it.</p></div>
+</div></div>
+<main class="wrap"><section>
+<div class="sechead"><div><h2>Latest breakdowns</h2><p class="lead">Share them with the person in your life who always clicks the link.</p></div><a class="more" href="scams.html">See all scams →</a></div>
+<div class="cards" id="latest"></div>
+<p class="fine">Scam Ray uses YouTube API Services to publish its own videos to its own channel. See our <a href="privacy.html">Privacy Policy</a>.</p>
+</section></main>
+<script>addEventListener("DOMContentLoaded", async () => {
+  const all = await loadScams();
+  document.getElementById("latest").innerHTML = all.sort(newest).slice(0, 3).map(card).join("");
+});</script>

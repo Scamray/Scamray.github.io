@@ -1,33 +1,43 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Privacy Policy | Scam Ray</title><meta name="description" content="Scam Ray's Privacy Policy.">
+<title>All scams | Scam Ray</title><meta name="description" content="Every scam Scam Ray has broken down, sortable and filterable.">
 <link rel="icon" href="assets/favicon.png"><link rel="stylesheet" href="style.css"><script src="assets/site.js" defer></script></head>
 <body>
 <div class="wrap"><nav class="nav"><a class="logo" href="index.html">SCAM RAY</a>
-<div class="links"><a href="scams.html">Scams</a><a href="about.html">About</a>
+<div class="links"><a href="scams.html" aria-current="page">Scams</a><a href="about.html">About</a>
 <details class="watch"><summary>Watch on</summary><div class="menu"><a href="https://www.youtube.com/@scamray"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8zM9.7 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg>YouTube</a><a href="https://www.instagram.com/thescamray"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.6a5.2 5.2 0 1 0 0 10.4 5.2 5.2 0 0 0 0-10.4zm0 8.6a3.4 3.4 0 1 1 0-6.8 3.4 3.4 0 0 1 0 6.8zm5.4-9.9a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg>Instagram</a></div></details></div></nav></div>
-<main class="wrap"><div class="doc">
-<h1>Privacy Policy</h1>
-<p class="muted">Last updated October 4, 2026</p>
-<p>Scam Ray is an educational video channel. Behind the scenes we use a private publishing tool, connected to Google, to post our own videos. This policy explains what that tool does with data.</p>
-<h2>Who uses the tool</h2>
-<p>Only the Scam Ray team signs in to it. Viewers never sign in to anything, and we collect nothing from them.</p>
-<h2>Google data the tool uses</h2>
-<ul>
-<li><strong>YouTube (upload scope):</strong> to upload Scam Ray's own videos, with their titles and descriptions, to the Scam Ray channel.</li>
-<li><strong>Google Drive:</strong> to store copies of Scam Ray's own videos so they can be reviewed before posting.</li>
-</ul>
-<p>The tool does not read, store or share any other YouTube or Drive data, and we never sell or share data with anyone. Sign-in credentials are stored securely and used only for the actions above.</p>
-<p>Scam Ray's use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
-<h2>YouTube</h2>
-<p>The tool uses YouTube API Services. By using it you are also bound by the <a href="https://www.youtube.com/t/terms">YouTube Terms of Service</a>, and Google's handling of data is covered by the <a href="https://policies.google.com/privacy">Google Privacy Policy</a>.</p>
-<h2>Removing access</h2>
-<p>Access can be revoked at any time from <a href="https://security.google.com/settings/security/permissions">Google's security settings</a>. After that, the tool can no longer upload or save anything.</p>
-<h2>Cookies</h2>
-<p>This website does not use cookies or analytics.</p>
-<h2>Contact</h2>
-<p>Questions about this policy: <a href="mailto:scamray@googlegroups.com">scamray@googlegroups.com</a></p>
-</div></main>
+<main class="wrap"><section class="top">
+<h1 class="pageh">All scams</h1>
+<p class="lead">Every scam we've broken down. Filter by how it reaches you, what kind of scam it is, or what they're after.</p>
+<div class="filters">
+<label>How it reaches you<select id="f-via"><option value="">All</option></select></label>
+<label>Type of scam<select id="f-type"><option value="">All</option></select></label>
+<label>What they're after<select id="f-after"><option value="">All</option></select></label>
+<label>Sort<select id="sort"><option value="new">Newest</option><option value="old">Oldest</option><option value="az">A to Z</option></select></label>
+</div>
+<p class="count" id="count"></p>
+<div class="cards" id="list"></div>
+</section></main>
+<script>addEventListener("DOMContentLoaded", async () => {
+  const all = await loadScams();
+  const keys = ["via", "type", "after"];
+  for (const k of keys) {
+    const sel = document.getElementById("f-" + k);
+    [...new Set(all.map(s => s[k]))].sort().forEach(v => sel.add(new Option(v, v)));
+    sel.onchange = draw;
+  }
+  document.getElementById("sort").onchange = draw;
+  function draw() {
+    let list = all.filter(s => keys.every(k => { const v = document.getElementById("f-" + k).value; return !v || s[k] === v; }));
+    const mode = document.getElementById("sort").value;
+    list.sort(mode === "az" ? (a, b) => a.title.replace(/\W/g, "").localeCompare(b.title.replace(/\W/g, ""))
+              : mode === "old" ? (a, b) => newest(b, a) : newest);
+    document.getElementById("count").textContent = list.length + (list.length === 1 ? " scam" : " scams");
+    document.getElementById("list").innerHTML = list.map(card).join("") || '<p class="lead">No scams match those filters yet.</p>';
+  }
+  draw();
+});</script>
+
 <div class="wrap"><footer><div class="social"><a href="https://www.youtube.com/@scamray" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12 31 31 0 0 0 1 16.8a3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8zM9.7 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg></a><a href="https://www.instagram.com/thescamray" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 3.9 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2zm0 4.6a5.2 5.2 0 1 0 0 10.4 5.2 5.2 0 0 0 0-10.4zm0 8.6a3.4 3.4 0 1 1 0-6.8 3.4 3.4 0 0 1 0 6.8zm5.4-9.9a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4z"/></svg></a></div>
 <div class="flinks"><span>© 2026 Scam Ray</span><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="mailto:scamray@googlegroups.com">Contact</a></div></footer></div>
 </body></html>

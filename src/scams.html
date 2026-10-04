@@ -1,0 +1,31 @@
+<main class="wrap"><section class="top">
+<h1 class="pageh">All scams</h1>
+<p class="lead">Every scam we've broken down. Filter by how it reaches you, what kind of scam it is, or what they're after.</p>
+<div class="filters">
+<label>How it reaches you<select id="f-via"><option value="">All</option></select></label>
+<label>Type of scam<select id="f-type"><option value="">All</option></select></label>
+<label>What they're after<select id="f-after"><option value="">All</option></select></label>
+<label>Sort<select id="sort"><option value="new">Newest</option><option value="old">Oldest</option><option value="az">A to Z</option></select></label>
+</div>
+<p class="count" id="count"></p>
+<div class="cards" id="list"></div>
+</section></main>
+<script>addEventListener("DOMContentLoaded", async () => {
+  const all = await loadScams();
+  const keys = ["via", "type", "after"];
+  for (const k of keys) {
+    const sel = document.getElementById("f-" + k);
+    [...new Set(all.map(s => s[k]))].sort().forEach(v => sel.add(new Option(v, v)));
+    sel.onchange = draw;
+  }
+  document.getElementById("sort").onchange = draw;
+  function draw() {
+    let list = all.filter(s => keys.every(k => { const v = document.getElementById("f-" + k).value; return !v || s[k] === v; }));
+    const mode = document.getElementById("sort").value;
+    list.sort(mode === "az" ? (a, b) => a.title.replace(/\W/g, "").localeCompare(b.title.replace(/\W/g, ""))
+              : mode === "old" ? (a, b) => newest(b, a) : newest);
+    document.getElementById("count").textContent = list.length + (list.length === 1 ? " scam" : " scams");
+    document.getElementById("list").innerHTML = list.map(card).join("") || '<p class="lead">No scams match those filters yet.</p>';
+  }
+  draw();
+});</script>
