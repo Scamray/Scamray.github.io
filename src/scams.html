@@ -1,31 +1,36 @@
 <main class="wrap"><section class="top">
 <h1 class="pageh">All scams</h1>
 <p class="lead">Every scam we've broken down. Filter by how it reaches you, what kind of scam it is, or what they're after.</p>
-<div class="filters">
-<label>How it reaches you<select id="f-via"><option value="">All</option></select></label>
-<label>Type of scam<select id="f-type"><option value="">All</option></select></label>
-<label>What they're after<select id="f-after"><option value="">All</option></select></label>
-<label>Sort<select id="sort"><option value="new">Newest</option><option value="old">Oldest</option><option value="az">A to Z</option></select></label>
-</div>
-<p class="count" id="count"></p>
-<div class="cards" id="list"></div>
+<div class="browse"><aside class="side">
+<h3>Sort</h3><div class="pills" data-k="sort"></div>
+<h3>How it reaches you</h3><div class="pills" data-k="via"></div>
+<h3>Type of scam</h3><div class="pills" data-k="type"></div>
+<h3>What they're after</h3><div class="pills" data-k="after"></div>
+<button class="reset" id="reset" type="button">Clear filters</button>
+</aside>
+<div><p class="count" id="count"></p>
+<div class="cards" id="list"></div></div></div>
 </section></main>
 <script>addEventListener("DOMContentLoaded", async () => {
   const all = await loadScams();
   const keys = ["via", "type", "after"];
-  for (const k of keys) {
-    const sel = document.getElementById("f-" + k);
-    [...new Set(all.map(s => s[k]))].sort().forEach(v => sel.add(new Option(v, v)));
-    sel.onchange = draw;
+  const state = { sort: "new", via: "", type: "", after: "" };
+  const opts = { sort: [["new", "Newest"], ["old", "Oldest"], ["az", "A to Z"]] };
+  for (const k of keys) opts[k] = [["", "All"], ...[...new Set(all.map(s => s[k]))].sort().map(v => [v, v])];
+  function pills() {
+    document.querySelectorAll(".pills").forEach(box => {
+      const k = box.dataset.k;
+      box.innerHTML = opts[k].map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${state[k] === v}">${l}</button>`).join("");
+      box.querySelectorAll("button").forEach(b => b.onclick = () => { state[k] = b.dataset.v; pills(); draw(); });
+    });
   }
-  document.getElementById("sort").onchange = draw;
+  document.getElementById("reset").onclick = () => { Object.assign(state, { via: "", type: "", after: "" }); pills(); draw(); };
   function draw() {
-    let list = all.filter(s => keys.every(k => { const v = document.getElementById("f-" + k).value; return !v || s[k] === v; }));
-    const mode = document.getElementById("sort").value;
-    list.sort(mode === "az" ? (a, b) => a.title.replace(/\W/g, "").localeCompare(b.title.replace(/\W/g, ""))
-              : mode === "old" ? (a, b) => newest(b, a) : newest);
+    let list = all.filter(s => keys.every(k => !state[k] || s[k] === state[k]));
+    list.sort(state.sort === "az" ? (a, b) => a.title.replace(/\W/g, "").localeCompare(b.title.replace(/\W/g, ""))
+              : state.sort === "old" ? (a, b) => newest(b, a) : newest);
     document.getElementById("count").textContent = list.length + (list.length === 1 ? " scam" : " scams");
     document.getElementById("list").innerHTML = list.map(card).join("") || (all.length ? '<p class="lead">No scams match those filters yet.</p>' : '<p class="lead">Our first breakdowns are on their way. Check back soon.</p>');
   }
-  draw();
+  pills(); draw();
 });</script>
