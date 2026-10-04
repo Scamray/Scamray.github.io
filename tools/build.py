@@ -35,9 +35,9 @@ def shell(name, body):
 <title>{title}</title><meta name="description" content="{desc}">
 <link rel="icon" href="assets/favicon-v3.png" sizes="48x48"><link rel="icon" href="assets/favicon-v3.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="assets/apple-touch-icon-v3.png"><link rel="stylesheet" href="style.css?v={ver('style.css')}"><script src="assets/site.js?v={ver('assets/site.js')}" defer></script></head>
 <body>
-<div class="wrap"><nav class="nav"><a class="logo" href="index.html">SCAM <span>RAY</span></a>
+<header class="site-head"><div class="wrap"><nav class="nav"><a class="logo" href="index.html">SCAM <span>RAY</span></a>
 <div class="links"><a href="scams.html"{cur("scams")}>Scams</a><a href="about.html"{cur("about")}>About</a>
-<details class="watch"><summary>Watch on</summary><div class="menu">{menu}</div></details></div></nav></div>
+<details class="watch"><summary>Watch on</summary><div class="menu">{menu}</div></details></div></nav></div></header>
 {body}
 <div class="wrap"><footer><div class="social">{social}</div>
 <div class="flinks"><span>© 2026 Scam Ray</span><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="mailto:scamray@googlegroups.com">Contact</a></div></footer></div>

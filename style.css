@@ -98,3 +98,9 @@ footer{flex-direction:column;gap:14px}
 @media(max-width:800px){.browse{grid-template-columns:1fr;gap:16px}.side{position:static}
 .pills{flex-direction:row;overflow-x:auto;gap:6px;margin:0 -24px 12px;padding:0 24px}.pills button{flex:none;border:1px solid var(--line);border-radius:99px;padding:7px 14px}.side h3{margin:0 0 8px}}
 .browse>*{min-width:0}
+
+/* Sticky header: stays at the top while you scroll; a hairline and soft shadow appear once the page moves */
+.site-head{position:sticky;top:0;z-index:50;background:#fff;transition:box-shadow .2s,border-color .2s;border-bottom:1px solid transparent}
+.site-head.scrolled{border-bottom-color:var(--line);box-shadow:0 4px 18px rgba(15,15,20,.06)}
+.site-head .nav{padding:16px 0}
+.side{top:100px}

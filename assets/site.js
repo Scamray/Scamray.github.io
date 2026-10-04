@@ -13,3 +13,11 @@ function card(s) {
 const newest = (a, b) => (b.posted || "").localeCompare(a.posted || "") || b.order - a.order;
 // only videos that are actually posted show on the site
 async function loadScams() { return (await (await fetch("scams.json", { cache: "no-cache" })).json()).filter(s => s.posted); }
+
+// Sticky header: show its bottom line once the page has scrolled
+(() => {
+  const h = document.querySelector(".site-head");
+  if (!h) return;
+  const on = () => h.classList.toggle("scrolled", window.scrollY > 4);
+  on(); window.addEventListener("scroll", on, { passive: true });
+})();
