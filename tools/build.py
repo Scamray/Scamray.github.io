@@ -33,9 +33,9 @@ def shell(name, body):
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}">
-<link rel="icon" href="assets/favicon.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon.png"><link rel="stylesheet" href="style.css?v={ver('style.css')}"><script src="assets/site.js?v={ver('assets/site.js')}" defer></script></head>
+<link rel="icon" href="assets/favicon-v2.png"><link rel="apple-touch-icon" href="assets/apple-touch-icon-v2.png"><link rel="stylesheet" href="style.css?v={ver('style.css')}"><script src="assets/site.js?v={ver('assets/site.js')}" defer></script></head>
 <body>
-<div class="wrap"><nav class="nav"><a class="logo" href="index.html">SCAM RAY</a>
+<div class="wrap"><nav class="nav"><a class="logo" href="index.html">SCAM <span>RAY</span></a>
 <div class="links"><a href="scams.html"{cur("scams")}>Scams</a><a href="about.html"{cur("about")}>About</a>
 <details class="watch"><summary>Watch on</summary><div class="menu">{menu}</div></details></div></nav></div>
 {body}
