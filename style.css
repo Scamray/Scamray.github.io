@@ -133,3 +133,6 @@ footer{flex-direction:column;gap:14px}
 .wrapchips button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:700}
 .sheet .show{display:block;width:100%;margin:24px 0 0;font:inherit;font-size:16px;font-weight:700;border:0;border-radius:14px;padding:15px;background:var(--ink);color:#fff;cursor:pointer}
 body.noscroll{overflow:hidden}}
+
+/* Selected filter choices: soft gray highlight instead of solid black (picked 2026-10-05) */
+.pills button[aria-pressed=true],.wrapchips button[aria-pressed=true],.mbar .chip.on{background:#eef0f3;border-color:#eef0f3;color:var(--ink);font-weight:600}.sheet .show{background:#2b2d31}
