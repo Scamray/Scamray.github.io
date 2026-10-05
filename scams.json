@@ -1,5 +1,5 @@
 [
- {"id":"001-toll-text","title":"The $4.15 unpaid toll text","blurb":"A fake toll bill that's really after your card number.","via":"Text","type":"Impersonation","after":"Card details","order":1,"posted":null,"url":null},
+ {"id":"001-toll-text","title":"The $4.15 unpaid toll text","blurb":"A fake toll bill that's really after your card number.","via":"Text","type":"Impersonation","after":"Card details","order":1,"posted":"2026-10-04","url":"https://www.youtube.com/shorts/RLlbBQIWx8Y"},
  {"id":"002-package-text","title":"\"Your package couldn't be delivered\"","blurb":"The fake delivery text that steals your card.","via":"Text","type":"Impersonation","after":"Card details","order":2,"posted":null,"url":null},
  {"id":"003-voice-clone","title":"AI voice-clone calls from \"family\"","blurb":"It sounds exactly like your grandson. It isn't him.","via":"Phone call","type":"Impersonation","after":"Money","order":3,"posted":null,"url":null},
  {"id":"004-pig-butchering","title":"Crypto romance \"pig butchering\"","blurb":"The wrong-number text that ends with your life savings.","via":"Text","type":"Romance and investment","after":"Money","order":4,"posted":null,"url":null},
