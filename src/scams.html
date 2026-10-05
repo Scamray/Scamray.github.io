@@ -1,6 +1,7 @@
 <main class="wrap"><section class="top">
 <h1 class="pageh">All scams</h1>
 <p class="lead">Every scam we've broken down. Filter by how it reaches you, what kind of scam it is, or what they're after.</p>
+<div class="mbar" id="mbar"></div>
 <div class="browse"><aside class="side">
 <h3>Sort</h3><div class="pills" data-k="sort"></div>
 <h3>How it reaches you</h3><div class="pills" data-k="via"></div>
@@ -11,26 +12,66 @@
 <div><p class="count" id="count"></p>
 <div class="cards" id="list"></div></div></div>
 </section></main>
+<div class="sheet-bg" id="sheetbg" hidden></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" hidden></div>
 <script>addEventListener("DOMContentLoaded", async () => {
   const all = await loadScams();
   const keys = ["via", "type", "after"];
+  const names = { sort: "Sort", via: "How it reaches you", type: "Type of scam", after: "What they're after" };
   const state = { sort: "new", via: "", type: "", after: "" };
   const opts = { sort: [["new", "Newest"], ["old", "Oldest"], ["az", "A to Z"]] };
   for (const k of keys) opts[k] = [["", "All"], ...[...new Set(all.map(s => s[k]))].sort().map(v => [v, v])];
+  const label = k => opts[k].find(([v]) => v === state[k])[1];
+  const matches = st => all.filter(s => keys.every(k => !st[k] || s[k] === st[k]));
+  const plural = n => n + (n === 1 ? " scam" : " scams");
   function pills() {
     document.querySelectorAll(".pills").forEach(box => {
       const k = box.dataset.k;
       box.innerHTML = opts[k].map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${state[k] === v}">${l}</button>`).join("");
-      box.querySelectorAll("button").forEach(b => b.onclick = () => { state[k] = b.dataset.v; pills(); draw(); });
+      box.querySelectorAll("button").forEach(b => b.onclick = () => { state[k] = b.dataset.v; update(); });
     });
   }
-  document.getElementById("reset").onclick = () => { Object.assign(state, { via: "", type: "", after: "" }); pills(); draw(); };
+  document.getElementById("reset").onclick = () => { Object.assign(state, { via: "", type: "", after: "" }); update(); };
   function draw() {
-    let list = all.filter(s => keys.every(k => !state[k] || s[k] === state[k]));
+    const list = matches(state);
     list.sort(state.sort === "az" ? (a, b) => a.title.replace(/\W/g, "").localeCompare(b.title.replace(/\W/g, ""))
               : state.sort === "old" ? (a, b) => newest(b, a) : newest);
-    document.getElementById("count").textContent = list.length + (list.length === 1 ? " scam" : " scams");
+    document.getElementById("count").textContent = plural(list.length);
     document.getElementById("list").innerHTML = list.map(card).join("") || (all.length ? '<p class="lead">No scams match those filters yet.</p>' : '<p class="lead">Our first breakdowns are on their way. Check back soon.</p>');
   }
-  pills(); draw();
+
+  // Phones: a slim sticky bar under the header; choices open in a bottom sheet
+  const bar = document.getElementById("mbar"), sheet = document.getElementById("sheet"), bg = document.getElementById("sheetbg");
+  const close = () => { sheet.hidden = bg.hidden = true; document.body.classList.remove("noscroll"); };
+  const open = html => { sheet.innerHTML = '<div class="grab"></div>' + html; sheet.hidden = bg.hidden = false; document.body.classList.add("noscroll"); };
+  bg.onclick = close;
+  const caret = '<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  // sort: big tap rows with a check on the current one
+  function listSheet(k) {
+    open(`<h2>${names[k]}</h2><div class="rows">${opts[k].map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${state[k] === v}"><span>${l}</span>${state[k] === v ? "✓" : ""}</button>`).join("")}</div>`);
+    sheet.querySelectorAll(".rows button").forEach(b => b.onclick = () => { state[k] = b.dataset.v; close(); update(); });
+  }
+  // every filter at once; nothing applies until "Show N scams"
+  function filterSheet() {
+    const draft = { ...state };
+    const render = () => {
+      open(`<div class="sh-head"><h2>Filters</h2><button type="button" class="link" id="clr">Clear all</button></div>`
+        + keys.map(k => `<h3>${names[k]}</h3><div class="wrapchips">${opts[k].map(([v, l]) => `<button type="button" data-k="${k}" data-v="${v}" aria-pressed="${draft[k] === v}">${l}</button>`).join("")}</div>`).join("")
+        + `<button type="button" class="show" id="show">Show ${plural(matches(draft).length)}</button>`);
+      sheet.querySelectorAll(".wrapchips button").forEach(b => b.onclick = () => { draft[b.dataset.k] = b.dataset.v; render(); });
+      sheet.querySelector("#clr").onclick = () => { keys.forEach(k => draft[k] = ""); render(); };
+      sheet.querySelector("#show").onclick = () => { Object.assign(state, draft); close(); update(); };
+    };
+    render();
+  }
+  function bar_() {
+    const n = keys.filter(k => state[k]).length;
+    bar.innerHTML = `<span class="mcount">${plural(matches(state).length)}</span>
+      <button type="button" class="chip" id="msort">${label("sort")} ${caret}</button>
+      <button type="button" class="chip${n ? " on" : ""}" id="mfilt"><svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M4.5 8h7M7 12h2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg> Filters${n ? " · " + n : ""}</button>`;
+    bar.querySelector("#msort").onclick = () => listSheet("sort");
+    bar.querySelector("#mfilt").onclick = filterSheet;
+  }
+  function update() { pills(); draw(); bar_(); }
+  update();
 });</script>

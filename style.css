@@ -108,3 +108,28 @@ footer{flex-direction:column;gap:14px}
 
 /* Home on phones: a lone Short sits in the middle; more than one still starts at the left so the swipe row reads */
 @media(max-width:800px){#latest .vcard:first-child{margin-left:auto}#latest .vcard:last-child{margin-right:auto}}
+
+/* Scams page on phones: slim sticky bar under the header; choices open in a bottom sheet */
+.mbar,.sheet,.sheet-bg{display:none}
+@media(max-width:800px){
+.browse .side{display:none}
+.mbar{display:flex;align-items:center;gap:8px;position:sticky;top:var(--headh,64px);z-index:20;background:#fff;margin:0 -24px 14px;padding:10px 24px;border-bottom:1px solid var(--line)}
+.mcount{margin-right:auto;font-size:15px;color:var(--muted)}
+.mbar .chip{display:inline-flex;align-items:center;gap:6px;flex:none;font:inherit;font-size:15px;font-weight:600;color:var(--ink);background:#fff;border:1px solid #dcdcdf;border-radius:99px;padding:8px 14px;cursor:pointer}
+.mbar .chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.browse .count{display:none}
+.sheet-bg:not([hidden]){display:block;position:fixed;inset:0;background:rgba(10,10,15,.38);z-index:90}
+.sheet:not([hidden]){display:block;position:fixed;left:0;right:0;bottom:0;z-index:91;background:#fff;border-radius:20px 20px 0 0;padding:8px 20px calc(20px + env(safe-area-inset-bottom));max-height:85vh;overflow:auto;box-shadow:0 -10px 40px rgba(0,0,0,.15)}
+.sheet .grab{width:40px;height:5px;border-radius:9px;background:#ddd;margin:4px auto 14px}
+.sheet h2{font-size:20px;margin:0 0 10px}
+.sheet h3{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:18px 0 10px}
+.sh-head{display:flex;justify-content:space-between;align-items:baseline}
+.sheet .link{font:inherit;font-size:15px;border:0;background:none;color:var(--link);padding:0;cursor:pointer}
+.rows{display:flex;flex-direction:column}
+.rows button{display:flex;justify-content:space-between;align-items:center;font:inherit;font-size:17px;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;padding:15px 2px;color:var(--ink);cursor:pointer}
+.rows button[aria-pressed=true]{font-weight:700}
+.wrapchips{display:flex;flex-wrap:wrap;gap:8px}
+.wrapchips button{font:inherit;font-size:15px;border:1px solid #dcdcdf;background:#fff;border-radius:99px;padding:8px 14px;color:var(--ink);cursor:pointer}
+.wrapchips button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff;font-weight:700}
+.sheet .show{display:block;width:100%;margin:24px 0 0;font:inherit;font-size:16px;font-weight:700;border:0;border-radius:14px;padding:15px;background:var(--ink);color:#fff;cursor:pointer}
+body.noscroll{overflow:hidden}}
