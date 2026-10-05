@@ -20,4 +20,7 @@ async function loadScams() { return (await (await fetch("scams.json", { cache: "
   if (!h) return;
   const on = () => h.classList.toggle("scrolled", window.scrollY > 4);
   on(); window.addEventListener("scroll", on, { passive: true });
+  // lets sticky bars sit right under the header
+  const hh = () => document.documentElement.style.setProperty("--headh", h.offsetHeight + "px");
+  hh(); new ResizeObserver(hh).observe(h);
 })();

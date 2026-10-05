@@ -40,7 +40,8 @@ def shell(name, body):
 <details class="watch"><summary>Watch on</summary><div class="menu">{menu}</div></details></div></nav></div></header>
 {body}
 <div class="wrap"><footer><div class="social">{social}</div>
-<div class="flinks"><span>© 2026 Scam Ray</span><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="mailto:scamray@googlegroups.com">Contact</a></div></footer></div>
+<div class="flinks"><span>© 2026 Scam Ray</span><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="mailto:scamray@googlegroups.com">Contact</a></div>
+<p class="fine">Scam Ray uses YouTube API Services to publish its own videos to its own channel. See our <a href="privacy.html">Privacy Policy</a>.</p></footer></div>
 </body></html>
 """
 
