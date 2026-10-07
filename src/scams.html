@@ -14,8 +14,8 @@
 </section></main>
 <div class="sheet-bg" id="sheetbg" hidden></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" hidden></div>
-<script>addEventListener("DOMContentLoaded", async () => {
-  const all = await loadScams();
+<script>(() => {
+  const all = loadScams();
   const keys = ["via", "type", "after"];
   const names = { sort: "Sort", via: "How it reaches you", type: "Type of scam", after: "What they're after" };
   const state = { sort: "new", via: "", type: "", after: "" };
@@ -74,4 +74,4 @@
   }
   function update() { pills(); draw(); bar_(); }
   update();
-});</script>
+})();</script>

@@ -1,9 +1,14 @@
-@font-face{font-family:Inter;font-weight:900;src:url(assets/Inter-Black.ttf) format("truetype");font-display:swap}
-@font-face{font-family:Inter;font-weight:700;src:url(assets/Inter-Bold.ttf) format("truetype");font-display:swap}
-@font-face{font-family:Inter;font-weight:400;src:url(assets/Inter-Regular.ttf) format("truetype");font-display:swap}
+@font-face{font-family:Inter;font-weight:900;src:url(assets/inter-black-v1.woff2) format("woff2");font-display:optional}
+@font-face{font-family:Inter;font-weight:700;src:url(assets/inter-bold-v1.woff2) format("woff2");font-display:optional}
+@font-face{font-family:Inter;font-weight:400;src:url(assets/inter-regular-v1.woff2) format("woff2");font-display:optional}
+/* Fonts are preloaded and "optional": if Inter isn't ready by first paint (slow connection), the page keeps the stand-in
+   below for that visit instead of swapping mid-read, so nothing jumps. The stand-in is sized to Inter's measurements. */
+@font-face{font-family:"Inter Fallback";font-weight:400;src:local("Arial"),local("ArialMT"),local("Liberation Sans"),local("Arimo");size-adjust:106.37%;ascent-override:91.08%;descent-override:22.68%;line-gap-override:0%}
+@font-face{font-family:"Inter Fallback";font-weight:700;src:local("Arial Bold"),local("Arial-BoldMT"),local("Liberation Sans Bold"),local("Arimo Bold");size-adjust:100.51%;ascent-override:96.38%;descent-override:24%;line-gap-override:0%}
+@font-face{font-family:"Inter Fallback";font-weight:900;src:local("Arial Bold"),local("Arial-BoldMT"),local("Liberation Sans Bold"),local("Arimo Bold");size-adjust:101.49%;ascent-override:95.45%;descent-override:23.77%;line-gap-override:0%}
 :root{--ink:#0d0d0d;--muted:#5b5b5b;--soft:#8a8a8a;--line:#ececec;--panel:#f7f7f8;--navy:#0a1222;--cyan:#5ae6ff;--red:#ff3b3b;--red2:#d32f2f;--green:#34c759;--link:#0a7ea0}
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.55}
+body{margin:0;font-family:Inter,"Inter Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.55}
 a{color:inherit;text-decoration:none}
 .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
 /* logo: the same wordmark as the channel banner */

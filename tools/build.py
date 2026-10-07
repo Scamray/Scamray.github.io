@@ -1,8 +1,10 @@
 """Builds the site's pages from one shared shell (nav + footer). Run: python3 tools/build.py
 
-Page bodies live in src/*.html; scam cards come from scams.json at view time.
+Page bodies live in src/*.html. Pages that list scams get scams.json and assets/cards.js inlined, so cards are
+already there on first paint (rebuild whenever scams.json changes).
 """
 import hashlib
+import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -30,10 +32,18 @@ def shell(name, body):
     menu = "".join(f'<a href="{u}">{ICONS[i]}{n}</a>' for n, u, i in LINKS)
     social = "".join(f'<a href="{u}" aria-label="{n}">{ICONS[i]}</a>' for n, u, i in LINKS)
     cur = lambda p: ' aria-current="page"' if p == name else ""
+    # load the fonts first, so text doesn't reflow when they arrive
+    pre = "".join(f'<link rel="preload" href="assets/inter-{w}-v1.woff2" as="font" type="font/woff2" crossorigin>' for w in ("black", "bold", "regular"))
+    if name == "index":
+        pre += '<link rel="preload" href="assets/phone-bg-white-2.jpg" as="image">'
+    data = ""
+    if name in ("index", "scams"):
+        scams = json.dumps(json.loads((ROOT / "scams.json").read_text()), ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
+        data = f"<script>const SCAMS = {scams};\n{(ROOT / 'assets' / 'cards.js').read_text()}</script>"
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}">
-<link rel="icon" href="assets/favicon-v3.png" sizes="48x48"><link rel="icon" href="assets/favicon-v3.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="assets/apple-touch-icon-v3.png"><link rel="stylesheet" href="style.css?v={ver('style.css')}"><script src="assets/site.js?v={ver('assets/site.js')}" defer></script></head>
+<link rel="icon" href="assets/favicon-v3.png" sizes="48x48"><link rel="icon" href="assets/favicon-v3.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="assets/apple-touch-icon-v3.png">{pre}<link rel="stylesheet" href="style.css?v={ver('style.css')}">{data}<script src="assets/site.js?v={ver('assets/site.js')}" defer></script></head>
 <body>
 <header class="site-head"><div class="wrap"><nav class="nav"><a class="logo" href="index.html">SCAM <span>RAY</span></a>
 <div class="links"><a href="scams.html"{cur("scams")}>Scams</a><a href="about.html"{cur("about")}>About</a>
