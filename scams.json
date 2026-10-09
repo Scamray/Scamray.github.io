@@ -6,9 +6,7 @@
     "via": "Text",
     "type": "Impersonation",
     "after": "Card details",
-    "order": 1,
-    "posted": "2026-10-04",
-    "url": "https://www.youtube.com/shorts/RLlbBQIWx8Y"
+    "order": 1
   },
   {
     "id": "002-package-text",
