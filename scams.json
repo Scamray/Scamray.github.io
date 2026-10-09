@@ -73,5 +73,82 @@
     "order": 7,
     "posted": null,
     "url": null
+  },
+  {
+    "id": "008-tech-support-popup",
+    "title": "The fake virus pop-up",
+    "blurb": "Real security warnings never ask you to call a number.",
+    "via": "Pop-up",
+    "type": "Tech support",
+    "after": "Money",
+    "order": 8,
+    "posted": null,
+    "url": null
+  },
+  {
+    "id": "009-jury-duty-warrant",
+    "title": "\"You missed jury duty\" calls",
+    "blurb": "Courts never demand a fine over the phone.",
+    "via": "Phone call",
+    "type": "Impersonation",
+    "after": "Money",
+    "order": 9,
+    "posted": null,
+    "url": null
+  },
+  {
+    "id": "010-qr-parking-meter",
+    "title": "Fake QR codes on parking meters",
+    "blurb": "A sticker over the real code sends your card to a scammer.",
+    "via": "QR code",
+    "type": "Phishing",
+    "after": "Card details",
+    "order": 10,
+    "posted": null,
+    "url": null
+  },
+  {
+    "id": "011-bitcoin-atm",
+    "title": "\"Put your cash in a Bitcoin ATM\"",
+    "blurb": "No real agency will ever tell you to use a Bitcoin ATM.",
+    "via": "Phone call",
+    "type": "Impersonation",
+    "after": "Money",
+    "order": 11,
+    "posted": null,
+    "url": null
+  },
+  {
+    "id": "012-fake-renewal-invoice",
+    "title": "The fake renewal invoice",
+    "blurb": "A $449.99 charge you never made, and a number to call.",
+    "via": "Email",
+    "type": "Refund",
+    "after": "Money",
+    "order": 12,
+    "posted": null,
+    "url": null
+  },
+  {
+    "id": "013-gift-card-utility",
+    "title": "\"Your power gets cut off in 30 minutes\"",
+    "blurb": "Anyone who wants a bill paid in gift cards is a scammer.",
+    "via": "Phone call",
+    "type": "Impersonation",
+    "after": "Money",
+    "order": 13,
+    "posted": null,
+    "url": null
+  },
+  {
+    "id": "014-fake-check-overpay",
+    "title": "The buyer who \"overpaid\" you",
+    "blurb": "A fake check, and the money you send back is real.",
+    "via": "Text",
+    "type": "Marketplace",
+    "after": "Money",
+    "order": 14,
+    "posted": null,
+    "url": null
   }
 ]
