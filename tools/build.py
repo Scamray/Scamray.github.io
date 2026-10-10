@@ -51,7 +51,7 @@ def shell(name, body):
 {body}
 <div class="wrap"><footer><div class="social">{social}</div>
 <div class="flinks"><span>© 2026 Scam Ray</span><a href="terms.html">Terms of Service</a><a href="mailto:scamray@googlegroups.com">Contact</a></div>
-<p class="fine">Scam Ray uses YouTube API Services to publish its own videos to its own channel. See our <a href="privacy.html">Privacy Policy</a>.</p></footer></div>
+<p class="fine">Scam Ray uses YouTube API Services to publish and track its own videos on its own channel. See our <a href="privacy.html">Privacy Policy</a>.</p></footer></div>
 </body></html>
 """
 
